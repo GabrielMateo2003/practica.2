@@ -1,35 +1,27 @@
-name: Pipeline CI/CD Practica 2
+name: Pipeline CI-CD Practica 2
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   integracion-continua:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout del código
+      - name: Checkout del codigo
         uses: actions/checkout@v4
 
-      - name: Corregir permisos del script
+      - name: Configurar permisos
         run: chmod +x scripts/test.sh
 
-      - name: Lint / Validación de archivos
+      - name: Validar archivos
         run: |
           test -f Dockerfile
           test -f docker-compose.yml
           test -f app/index.html
-          test -x scripts/test.sh
 
-         name: Ejecutar Pruebas (Test)
-        run: |
-          echo "Contenido de index.html:"
-          cat app/index.html
-          ./scripts/test.sh
+      - name: Ejecutar Pruebas
+        run: sh scripts/test.sh
 
-      - name: Build de Imagen Docker
+      - name: Build Imagen
         run: docker build -t cicd-web-demo:staging .
