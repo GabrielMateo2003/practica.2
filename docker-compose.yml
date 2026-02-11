@@ -4,7 +4,6 @@ services:
     container_name: cicd_web_staging
     ports:
       - "8081:80"
-
   web-production:
     image: cicd-web-demo:production
     container_name: cicd_web_production
